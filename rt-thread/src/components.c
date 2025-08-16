@@ -179,11 +179,14 @@ void main_thread_entry(void *parameter)
     /* RT-Thread components initialization */
     rt_components_init();
 #endif
+
+#if 0
     /* invoke system main function */
 #if defined(__CC_ARM) || defined(__CLANG_ARM)
     $Super$$main(); /* for ARMCC. */
 #elif defined(__ICCARM__) || defined(__GNUC__)
     main();
+#endif
 #endif
 }
 

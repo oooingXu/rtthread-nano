@@ -49,6 +49,7 @@
 
 #include <rthw.h>
 #include <rtthread.h>
+#include <klib.h>
 
 #ifndef RT_USING_MEMHEAP_AS_HEAP
 
@@ -181,6 +182,8 @@ static void plug_holes(struct heap_mem *mem)
 
     /* plug hole backward */
     pmem = (struct heap_mem *)&heap_ptr[mem->prev];
+		printf("&heap_ptr = 0x%08x, heap_ptr = 0x%08x, mem->prev = 0x%08x, &heap_ptr[mem->prev] = 0x%08x\n", (uint32_t)&heap_ptr, (uint32_t)heap_ptr, mem->prev, (uint32_t)&heap_ptr[mem->prev]);
+		printf("pmem->used = 0x%08x\n", pmem->used);
     if (pmem != mem && pmem->used == 0)
     {
         /* if mem->prev is unused, combine mem and mem->prev */
@@ -203,6 +206,7 @@ static void plug_holes(struct heap_mem *mem)
  */
 void rt_system_heap_init(void *begin_addr, void *end_addr)
 {
+		//printf("heap_start = 0x%08x, heap_end = 0x%08x\n", (uint32_t)begin_addr, (uint32_t)end_addr);
     struct heap_mem *mem;
     rt_ubase_t begin_align = RT_ALIGN((rt_ubase_t)begin_addr, RT_ALIGN_SIZE);
     rt_ubase_t end_align   = RT_ALIGN_DOWN((rt_ubase_t)end_addr, RT_ALIGN_SIZE);

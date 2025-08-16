@@ -1,0 +1,30 @@
+SRCS += $(RTTHREAD_NANO)/rt-thread/bsp/npc/driver/board.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/bsp/npc/driver/interrupt.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/bsp/npc/driver/context.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/src/clock.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/src/irq.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/src/memheap.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/src/scheduler.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/src/slab.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/src/components.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/src/idle.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/src/kservice.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/src/mempool.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/src/thread.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/src/cpu.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/src/ipc.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/src/mem.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/src/object.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/src/timer.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/libcpu/risc-v/npc/cpuport.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/components/finsh/cmd.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/components/finsh/shell.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/components/finsh/msh.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/components/finsh/finsh_port.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/components/device/device.c
+
+CFLAGS += -I.
+CFLAGS += -I$(RTTHREAD_NANO)/rt-thread/include
+CFLAGS += -I$(RTTHREAD_NANO)/rt-thread/components/finsh
+CFLAGS += -I$(RTTHREAD_NANO)/rt-thread/libcpu/risc-v/npc
+

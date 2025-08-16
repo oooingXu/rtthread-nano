@@ -21,6 +21,7 @@
 
 #include <rtthread.h>
 #include <rthw.h>
+#include <klib.h>
 
 /* use precision */
 #define RT_PRINTF_PRECISION
