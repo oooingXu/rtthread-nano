@@ -11,7 +11,7 @@
 #define RT_THREAD_PRIORITY_MAX  32
 // <o>OS tick per second
 //  <i>Default: 1000   (1ms)
-#define RT_TICK_PER_SECOND  1000
+#define RT_TICK_PER_SECOND  1000 // 每秒1000次定时器中断
 // <o>Alignment size for CPU architecture data access
 //  <i>Default: 4
 #define RT_ALIGN_SIZE   4
@@ -27,7 +27,7 @@
 
 // <o>the stack size of main thread<1-4086>
 //  <i>Default: 512
-#define RT_MAIN_THREAD_STACK_SIZE     256
+#define RT_MAIN_THREAD_STACK_SIZE     1024 // 256大小不够
 
 // </h>
 
@@ -58,9 +58,9 @@
 
 // <e>Software timers Configuration
 // <i> Enables user timers
-#define RT_USING_TIMER_SOFT         0
+#define RT_USING_TIMER_SOFT         1
 #if RT_USING_TIMER_SOFT == 0
-    #undef RT_USING_TIMER_SOFT
+    #undef RT_USING_TIMER_SOFT // 不使用软件定时器调用callback
 #endif
 // <o>The priority level of timer thread <0-31>
 //  <i>Default: 4
@@ -130,10 +130,11 @@
 // <h>Device Configuration
 // <c1>using device framework
 //  <i>using device framework
-#define RT_USING_DEVICE
+//#define RT_USING_DEVICE
 // </c>
 // </h>
 
 // <<< end of configuration section >>>
 
 #endif
+
