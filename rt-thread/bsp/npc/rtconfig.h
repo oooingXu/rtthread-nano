@@ -27,7 +27,7 @@
 
 // <o>the stack size of main thread<1-4086>
 //  <i>Default: 512
-#define RT_MAIN_THREAD_STACK_SIZE     1024 // 256大小不够
+#define RT_MAIN_THREAD_STACK_SIZE    1024 // 256大小不够
 
 // </h>
 
@@ -52,7 +52,7 @@
 // </c>
 // <c1>using idle hook
 //  <i>using idle hook
-//#define RT_USING_IDLE_HOOK
+#define RT_USING_IDLE_HOOK
 // </c>
 // </h>
 

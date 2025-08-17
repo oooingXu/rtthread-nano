@@ -14,6 +14,8 @@ static Context* ev_handler(Event e, Context *c) {
       break;
     }
     case EVENT_IRQ_TIMER: {
+			rt_tick_increase();
+			printf("TIMER_IRQ\n");
       break;
     }
     case EVENT_IRQ_IODEV: break;

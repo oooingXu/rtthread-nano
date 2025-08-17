@@ -18,6 +18,7 @@
  */
 
 #include <rthw.h>
+#include <klib.h>
 #include <rtthread.h>
 
 #if defined (RT_USING_HOOK)

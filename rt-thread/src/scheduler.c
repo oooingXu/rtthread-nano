@@ -41,6 +41,7 @@ rt_uint32_t rt_thread_ready_priority_group;
 rt_uint8_t rt_thread_ready_table[32];
 #endif
 
+#define RT_THREAD_STAT_YIELD 0x08
 
 extern volatile rt_uint8_t rt_interrupt_nest;
 static rt_int16_t rt_scheduler_lock_nest;
@@ -191,6 +192,110 @@ void rt_system_scheduler_start(void)
  * This function will perform one schedule. It will select one thread
  * with the highest priority level, then switch to it.
  */
+
+//void rt_schedule(void)
+//{
+//    rt_base_t level;
+//    struct rt_thread *to_thread;
+//    struct rt_thread *from_thread;
+//
+//    /* 禁用中断 - 协作式调度仍需要短暂关中断保护临界区 */
+//    level = rt_hw_interrupt_disable();
+//
+//    /* 检查调度器是否被锁定 */
+//    if (rt_scheduler_lock_nest == 0)
+//    {
+//        register rt_ubase_t highest_ready_priority;
+//        int need_insert_from_thread = 0;  // 新增：协作式调度标志
+//
+//        /* 计算最高就绪优先级（保留Nano的高效位图算法） */
+//        #if RT_THREAD_PRIORITY_MAX <= 32
+//        highest_ready_priority = __rt_ffs(rt_thread_ready_priority_group) - 1;
+//        #else
+//        register rt_ubase_t number;
+//        number = __rt_ffs(rt_thread_ready_priority_group) - 1;
+//        highest_ready_priority = (number << 3) + __rt_ffs(rt_thread_ready_table[number]) - 1;
+//        #endif
+//
+//        /* 获取候选切换线程 */
+//        to_thread = rt_list_entry(rt_thread_priority_table[highest_ready_priority].next,
+//                                  struct rt_thread, tlist);
+//
+//        /* 协作式调度核心修改 - 开始 */
+//        /* 检查当前线程是否在运行状态 */
+//        if ((rt_current_thread->stat & RT_THREAD_STAT_MASK) == RT_THREAD_RUNNING)
+//        {
+//            /* 情况1：当前线程优先级更高，继续运行 */
+//            if (rt_current_thread->current_priority < highest_ready_priority)
+//            {
+//                to_thread = rt_current_thread;
+//            }
+//            /* 情况2：优先级相同且未主动让出，继续运行 */
+//            else if (rt_current_thread->current_priority == highest_ready_priority &&
+//                     (rt_current_thread->stat & RT_THREAD_STAT_YIELD) == 0)
+//            {
+//                to_thread = rt_current_thread;
+//            }
+//            /* 情况3：需要切换（主动让出或更高优先级线程就绪） */
+//            else
+//            {
+//                need_insert_from_thread = 1;  // 标记当前线程需重回就绪队列
+//            }
+//            rt_current_thread->stat &= ~RT_THREAD_STAT_YIELD; // 清除让出标志
+//        }
+//        /* 协作式调度核心修改 - 结束 */
+//
+//        /* 确定需要切换线程 */
+//        if (to_thread != rt_current_thread)
+//        {
+//            rt_current_priority = (rt_uint8_t)highest_ready_priority;
+//            from_thread         = rt_current_thread;
+//            rt_current_thread   = to_thread;
+//
+//            RT_OBJECT_HOOK_CALL(rt_scheduler_hook, (from_thread, to_thread));
+//
+//            /* 协作式特殊处理：将让出CPU的线程插回就绪队列 */
+//            if (need_insert_from_thread)
+//            {
+//                /* 需要实现此函数（见下方补充代码） */
+//                rt_schedule_insert_thread(from_thread);
+//            }
+//
+//            /* 从就绪队列移除目标线程 */
+//            rt_schedule_remove_thread(to_thread);
+//            to_thread->stat = RT_THREAD_RUNNING | (to_thread->stat & ~RT_THREAD_STAT_MASK);
+//
+//            RT_DEBUG_LOG(RT_DEBUG_SCHEDULER,
+//                         ("[%d]switch to priority#%d "
+//                          "thread:%.*s(sp:0x%p), "
+//                          "from thread:%.*s(sp: 0x%p)\n",
+//                          rt_interrupt_nest, highest_ready_priority,
+//                          RT_NAME_MAX, to_thread->name, to_thread->sp,
+//                          RT_NAME_MAX, from_thread->name, from_thread->sp));
+//
+//            #ifdef RT_USING_OVERFLOW_CHECK
+//            _rt_scheduler_stack_check(to_thread);
+//            #endif
+//
+//            /* 协作式关键修改：移除中断上下文切换支持 */
+//            /* 协作式调度只在线程上下文切换 */
+//            rt_hw_context_switch((rt_ubase_t)&from_thread->sp,
+//                                 (rt_ubase_t)&to_thread->sp);
+//        }
+//        else
+//        {
+//            /* 无切换时维护当前线程状态 */
+//            rt_schedule_remove_thread(rt_current_thread);
+//            rt_current_thread->stat = RT_THREAD_RUNNING |
+//                                     (rt_current_thread->stat & ~RT_THREAD_STAT_MASK);
+//        }
+//    }
+//
+//    /* 重新启用中断 */
+//    rt_hw_interrupt_enable(level);
+//}
+
+
 void rt_schedule(void)
 {
     rt_base_t level;

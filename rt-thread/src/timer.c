@@ -20,6 +20,7 @@
 
 #include <rtthread.h>
 #include <rthw.h>
+#include <klib.h>
 
 /* hard timer list */
 static rt_list_t rt_timer_list[RT_TIMER_SKIP_LIST_LEVEL];
@@ -691,6 +692,7 @@ static void rt_thread_timer_entry(void *parameter)
             /* no software timer exist, suspend self. */
             rt_thread_suspend(rt_thread_self());
             rt_schedule();
+						printf("timer_schedule\n");
         }
         else
         {

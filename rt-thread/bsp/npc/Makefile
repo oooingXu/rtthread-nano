@@ -5,4 +5,5 @@
 NAME = rtthread
 CFLAGS += -Wno-unused-variable
 CFLAGS += -Wno-unused-but-set-variable
+CFLAGS += -Wno-unused-function
 

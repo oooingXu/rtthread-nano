@@ -182,8 +182,8 @@ static void plug_holes(struct heap_mem *mem)
 
     /* plug hole backward */
     pmem = (struct heap_mem *)&heap_ptr[mem->prev];
-		printf("&heap_ptr = 0x%08x, heap_ptr = 0x%08x, mem->prev = 0x%08x, &heap_ptr[mem->prev] = 0x%08x\n", (uint32_t)&heap_ptr, (uint32_t)heap_ptr, mem->prev, (uint32_t)&heap_ptr[mem->prev]);
-		printf("pmem->used = 0x%08x\n", pmem->used);
+		//printf("&heap_ptr = 0x%08x, heap_ptr = 0x%08x, mem->prev = 0x%08x, &heap_ptr[mem->prev] = 0x%08x\n", (uint32_t)&heap_ptr, (uint32_t)heap_ptr, mem->prev, (uint32_t)&heap_ptr[mem->prev]);
+		//printf("pmem->used = 0x%08x\n", pmem->used);
     if (pmem != mem && pmem->used == 0)
     {
         /* if mem->prev is unused, combine mem and mem->prev */
