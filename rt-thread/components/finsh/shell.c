@@ -20,6 +20,7 @@
 
 #include <rthw.h>
 #include <finsh_config.h>
+#include <klib.h>
 
 #ifdef RT_USING_FINSH
 

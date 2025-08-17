@@ -90,10 +90,28 @@ void rt_hw_console_output(const char *str)
 
 #endif
 
+//static volatile uint32_t led;
+//#define LED_ADDR 0x80200000
+//
+//void led_init() {
+//	*(volatile uint32_t *)LED_ADDR = 0x1;
+//}
+//
+//void led_on() {
+//	uint32_t tmp = *(volatile uint32_t *)LED_ADDR;
+//	*(volatile uint32_t *)LED_ADDR = tmp << 1 | ((tmp & 0x80000000) >> 31);
+//}
+
 int main() {
 	ioe_init();
 	extern void __am_cte_init();
 	__am_cte_init();
+	//led_init();
+	//while(1) {
+	//	led_on();
+	//	rt_thread_mdelay(500);
+	//	printf("rt_thread_mdelay(500)\n");
+	//}
 	extern int entry(void);
 	entry();
 	return 0;

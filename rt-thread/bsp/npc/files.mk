@@ -22,9 +22,16 @@ SRCS += $(RTTHREAD_NANO)/rt-thread/components/finsh/shell.c
 SRCS += $(RTTHREAD_NANO)/rt-thread/components/finsh/msh.c
 SRCS += $(RTTHREAD_NANO)/rt-thread/components/finsh/finsh_port.c
 SRCS += $(RTTHREAD_NANO)/rt-thread/components/device/device.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/bsp/npc/coremark/core_list_join.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/bsp/npc/coremark/core_portme.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/bsp/npc/coremark/core_main.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/bsp/npc/coremark/core_state.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/bsp/npc/coremark/core_matrix.c
+SRCS += $(RTTHREAD_NANO)/rt-thread/bsp/npc/coremark/core_util.c
 
 CFLAGS += -I.
 CFLAGS += -I$(RTTHREAD_NANO)/rt-thread/include
 CFLAGS += -I$(RTTHREAD_NANO)/rt-thread/components/finsh
 CFLAGS += -I$(RTTHREAD_NANO)/rt-thread/libcpu/risc-v/npc
+CFLAGS += -I$(RTTHREAD_NANO)/rt-thread/bsp/npc/coremark
 
