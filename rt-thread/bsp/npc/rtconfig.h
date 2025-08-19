@@ -27,7 +27,7 @@
 
 // <o>the stack size of main thread<1-4086>
 //  <i>Default: 512
-#define RT_MAIN_THREAD_STACK_SIZE    2048 // 256大小不够
+#define RT_MAIN_THREAD_STACK_SIZE    4096 // 256大小不够
 
 // </h>
 
@@ -41,14 +41,14 @@
 #define RT_DEBUG_INIT 0
 // <c1>thread stack over flow detect
 //  <i> Diable Thread stack over flow detect
-//#define RT_USING_OVERFLOW_CHECK
+#define RT_USING_OVERFLOW_CHECK
 // </c>
 // </h>
 
 // <h>Hook Configuration
 // <c1>using hook
 //  <i>using hook
-//#define RT_USING_HOOK
+#define RT_USING_HOOK
 // </c>
 // <c1>using idle hook
 //  <i>using idle hook
@@ -117,7 +117,7 @@
 // <o>the buffer size of console <1-1024>
 //  <i>the buffer size of console
 //  <i>Default: 128  (128Byte)
-#define RT_CONSOLEBUF_SIZE          256
+#define RT_CONSOLEBUF_SIZE          1024
 // </h>
 
 // <h>FinSH Configuration

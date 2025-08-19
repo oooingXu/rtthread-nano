@@ -26,7 +26,7 @@ Original Author: Shay Gal-on
 #include <klib.h>
 #include <klib-macros.h>
 
-#define ITERATIONS 1
+#define ITERATIONS 10000
 /************************/
 /* Data types and settings */
 /************************/
@@ -79,7 +79,8 @@ Original Author: Shay Gal-on
     //FLAGS_STR /* "Please put compiler flags here (e.g. -o3)" */
 #endif
 #ifndef MEM_LOCATION
-#define MEM_LOCATION "STACK"
+#define MEM_LOCATION "HEAP"
+//#define MEM_LOCATION "STACK"
 #endif
 
 /* Data Types :
@@ -133,8 +134,13 @@ typedef ee_u32 CORE_TICKS;
         MEM_STACK - to allocate the data block on the stack (NYI).
 */
 #ifndef MEM_METHOD
-#define MEM_METHOD MEM_STACK
+#define MEM_METHOD MEM_STATIC
+//#define MEM_METHOD MEM_MALLOC
+//#define MEM_METHOD MEM_STACK
 #endif
+
+#define MEM_SIZE (10*1024)
+#define MEM_GUARD 1
 
 /* Configuration : MULTITHREAD
         Define for parallel execution

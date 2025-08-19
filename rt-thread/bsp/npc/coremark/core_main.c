@@ -107,14 +107,15 @@ char *mem_name[3] = { "Static", "Heap", "Stack" };
 
 #if MAIN_HAS_NOARGC
 MAIN_RETURN_TYPE
-core_main(void)
+coremark(void)
 {
     int   argc = 0;
     char *argv[1];
 #else
 MAIN_RETURN_TYPE
-core_main(int argc, char *argv[])
+coremark(int argc, char *argv[])
 {
+	*(volatile uint32_t *)(0x80200040) = 0x0000ffff;
 #endif
     ee_u16       i, j = 0, num_algorithms = 0;
     ee_s16       known_id = -1, total_errors = 0;
@@ -284,6 +285,7 @@ for (i = 0; i < MULTITHREAD; i++)
 #endif
     stop_time();
     total_time = get_time();
+		*(volatile uint32_t *)(0x80200040) = 0xffff0000;
     /* get a function of the input to report */
     seedcrc = crc16(results[0].seed1, seedcrc);
     seedcrc = crc16(results[0].seed2, seedcrc);
@@ -442,5 +444,5 @@ for (i = 0; i < MULTITHREAD; i++)
     return MAIN_RETURN_VAL;
 }
 
-//MSH_CMD_EXPORT(core_main, core_main);
-INIT_ENV_EXPORT(core_main);
+MSH_CMD_EXPORT(coremark, coremark);
+//INIT_ENV_EXPORT(core_main);

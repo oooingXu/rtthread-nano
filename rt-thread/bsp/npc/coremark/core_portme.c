@@ -158,3 +158,15 @@ portable_fini(core_portable *p)
 {
     p->portable_id = 0;
 }
+
+void *
+portable_malloc(size_t size)
+{
+	return malloc(size);
+}
+
+void 
+portable_free(void *p)
+{
+	free(p);
+}

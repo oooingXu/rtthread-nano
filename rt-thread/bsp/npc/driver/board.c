@@ -14,12 +14,24 @@
 #include <klib.h>
 #include <klib-macros.h>
 
+static volatile uint32_t led;
+#define LED_ADDR 0x80200040
+
+void led_init() {
+	*(volatile uint32_t *)LED_ADDR = 0x00000001;
+}
+
+void led_on() {
+	uint32_t tmp = *(volatile uint32_t *)LED_ADDR;
+	*(volatile uint32_t *)LED_ADDR = tmp << 1 | ((tmp & 0x80000000) >> 31);
+}
+
 #if defined(RT_USING_USER_MAIN) && defined(RT_USING_HEAP)
 /*
  * Please modify RT_HEAP_SIZE if you enable RT_USING_HEAP
  * the RT_HEAP_SIZE max value = (sram size - ZI size), 1024 means 1024 bytes
  */
-#define RT_HEAP_SIZE (15*1024)
+#define RT_HEAP_SIZE (50*1024)
 static rt_uint8_t rt_heap[RT_HEAP_SIZE];
 
 RT_WEAK void *rt_heap_begin_get(void)
@@ -56,10 +68,11 @@ void rt_hw_board_init(void)
      * periodically with the frequency RT_TICK_PER_SECOND. 
      */
 
+		led_on();
     /* Call components board initial (use INIT_BOARD_EXPORT()) */
 #if defined(RT_USING_USER_MAIN) && defined(RT_USING_HEAP)
     rt_system_heap_init(rt_heap_begin_get(), rt_heap_end_get());
-		//printf("rt_system_heap_init\n");
+		printf("rt_system_heap_init: heap_start = 0x%08x, heap_end = 0x%08x\n", rt_heap_begin_get(), rt_heap_end_get());
 #endif
 
 //#ifdef RT_USING_CONSOLE
@@ -70,6 +83,7 @@ void rt_hw_board_init(void)
     rt_components_board_init();
 		//printf("rt_components_board_init\n");
 #endif
+		led_on();
 
 }
 
@@ -90,22 +104,11 @@ void rt_hw_console_output(const char *str)
 
 #endif
 
-//static volatile uint32_t led;
-//#define LED_ADDR 0x80200000
-//
-//void led_init() {
-//	*(volatile uint32_t *)LED_ADDR = 0x1;
-//}
-//
-//void led_on() {
-//	uint32_t tmp = *(volatile uint32_t *)LED_ADDR;
-//	*(volatile uint32_t *)LED_ADDR = tmp << 1 | ((tmp & 0x80000000) >> 31);
-//}
-
 int main() {
 	ioe_init();
 	extern void __am_cte_init();
 	__am_cte_init();
+	led_init();
 	//led_init();
 	//while(1) {
 	//	led_on();
