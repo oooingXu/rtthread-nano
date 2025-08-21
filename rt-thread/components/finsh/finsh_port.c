@@ -29,10 +29,10 @@
 //  }
 //    return -1;
 //}
-#define UART_RX		 0x10000008
-#define UART_PMPTY 0x1000000c
+#define UART_RADDR	 (0xc0000400)
+#define UART_FIFO_RX (0xc0000404)
 
-static const char *p = "ps\ncoremark\nlist_thread\n";
+static const char *p = "help\nps\ncoremark\nlist_thread\n";
 static int builtin = 1;
 
 RT_WEAK char rt_hw_console_getchar(void)
@@ -45,11 +45,11 @@ RT_WEAK char rt_hw_console_getchar(void)
     }
   }
     /* Note: the initial value of ch must < 0 */
-		char empty = *(volatile char *)UART_PMPTY;
+		char empty = *(volatile char *)UART_FIFO_RX;
 		while(empty == 1) {
-			empty = *(volatile char *)UART_PMPTY;
+			empty = *(volatile char *)UART_FIFO_RX;
 		}
-		char ch = *(volatile char *)UART_RX;
+		char ch = *(volatile char *)UART_RADDR;
 
 //#error "TODO 4: Read a char from the uart and assign it to 'ch'."
 

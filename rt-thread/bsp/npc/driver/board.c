@@ -14,17 +14,17 @@
 #include <klib.h>
 #include <klib-macros.h>
 
-static volatile uint32_t led;
-#define LED_ADDR 0x80200040
-
-void led_init() {
-	*(volatile uint32_t *)LED_ADDR = 0x00000001;
-}
-
-void led_on() {
-	uint32_t tmp = *(volatile uint32_t *)LED_ADDR;
-	*(volatile uint32_t *)LED_ADDR = tmp << 1 | ((tmp & 0x80000000) >> 31);
-}
+//static volatile uint32_t led;
+//#define LED_ADDR 0x80200040
+//
+//void led_init() {
+//	*(volatile uint32_t *)LED_ADDR = 0x00000001;
+//}
+//
+//void led_on() {
+//	uint32_t tmp = *(volatile uint32_t *)LED_ADDR;
+//	*(volatile uint32_t *)LED_ADDR = tmp << 1 | ((tmp & 0x80000000) >> 31);
+//}
 
 #if defined(RT_USING_USER_MAIN) && defined(RT_USING_HEAP)
 /*
@@ -68,7 +68,7 @@ void rt_hw_board_init(void)
      * periodically with the frequency RT_TICK_PER_SECOND. 
      */
 
-		led_on();
+		//led_on();
     /* Call components board initial (use INIT_BOARD_EXPORT()) */
 #if defined(RT_USING_USER_MAIN) && defined(RT_USING_HEAP)
     rt_system_heap_init(rt_heap_begin_get(), rt_heap_end_get());
@@ -83,7 +83,7 @@ void rt_hw_board_init(void)
     rt_components_board_init();
 		//printf("rt_components_board_init\n");
 #endif
-		led_on();
+		//led_on();
 
 }
 
@@ -108,7 +108,7 @@ int main() {
 	ioe_init();
 	extern void __am_cte_init();
 	__am_cte_init();
-	led_init();
+	//led_init();
 	//led_init();
 	//while(1) {
 	//	led_on();
@@ -120,3 +120,8 @@ int main() {
 	return 0;
 }
 
+void clear() {
+	printf("\033[H\033[J");
+}
+
+MSH_CMD_EXPORT(clear, clear);
